@@ -25,14 +25,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [  
-  'tetondan',
-  'dustinmyers',
-  'justsml',
-  'luishrd',
-  'bigknell',
 
-];
 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -62,13 +55,17 @@ const followersArray = [
   luishrd
   bigknell
 */
-axios.get('https://api.github.com/users/HUGHIII')
-.then(response => {
-  console.log(response.data);
-})
-.catch(error => {
-  console.log('data not returned', error)
-})
+
+
+const followersArray = [  
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell',
+
+];
+
 
 
 function profileComp(gitHubProf){
@@ -116,3 +113,24 @@ function profileComp(gitHubProf){
   
 return parentCompCard;
 }
+
+htmlCardsParent = document.querySelector('.cards')
+
+axios.get('https://api.github.com/users/HUGHIII')
+.then(response => {
+  console.log(response.data);
+  const componentData = profileComp(response.data)
+  htmlCardsParent.append(componentData);
+
+})
+.catch(error => {
+  console.log('data not returned', error)
+})
+
+followersArray.map(currentValue => {
+  axios.get(`https://api.github.com/users/${currentValue}`).then(apiResponse => {
+     const followerData = profileComp(apiResponse.data);
+     htmlCardsParent.append(followerData);
+  })
+})
+
