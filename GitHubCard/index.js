@@ -96,7 +96,7 @@ function profileComp(gitHubProf){
   compCardInfo.append(compLocat);
   compCardInfo.append(compProfile);
 
-  compProfile.append(compProfUrl);
+  compProfile.append(compProfUrl);   //url appends to profile <p>
   
   compCardInfo.append(compFollowers);
   compCardInfo.append(compFollowing);
@@ -105,31 +105,33 @@ function profileComp(gitHubProf){
   compImg.src = gitHubProf.avatar_url;
   compName.textContent = gitHubProf.name;
   compUserName.textContent = gitHubProf.login;
-  compLocat.textContent = gitHubProf.location;
+  compLocat.textContent = gitHubProf.location;      //targeting empty fields on created html and setting it up to recieve data in proper place
   compProfUrl.href = gitHubProf.html_url;
-  compFollowers.textContent = gitHubProf.followers;
-  compFollowing.textContent = gitHubProf.following;
-  compBio.textContent = gitHubProf.bio;
+  compFollowers.textContent = `Followers: ${gitHubProf.followers}`;
+  compFollowing.textContent = `Following: ${gitHubProf.following}`;
+  compBio.textContent = `About me: ${gitHubProf.bio}`; // figure out how to display none 'if' null
+
+ 
   
-return parentCompCard;
+return parentCompCard;   //return parent element created inside function
 }
 
-htmlCardsParent = document.querySelector('.cards')
+htmlCardsParent = document.querySelector('.cards')   // select and assign parent from the html doc that will adopt my component with data passed through
 
-axios.get('https://api.github.com/users/HUGHIII')
-.then(response => {
-  console.log(response.data);
-  const componentData = profileComp(response.data)
-  htmlCardsParent.append(componentData);
+axios.get('https://api.github.com/users/HUGHIII') //calls api
+.then(response => {                               //then we have info from api in function ready to be used
+  //console.log(response.data);
+  const componentData = profileComp(response.data)  // take my function with said data from api passed through as arguments and assign or condense it into variable componentData
+  htmlCardsParent.append(componentData);            //and append it to the parent in the html.
 
 })
 .catch(error => {
   console.log('data not returned', error)
 })
 
-followersArray.map(currentValue => {
-  axios.get(`https://api.github.com/users/${currentValue}`).then(apiResponse => {
-     const followerData = profileComp(apiResponse.data);
+followersArray.map(currentValue => {                                                  //map through each user in followersArray and pass it to the template literal which completes the path
+  axios.get(`https://api.github.com/users/${currentValue}`).then(apiResponse => {     //then take that data and pass it as arguments through profileComp function and condense it into followerData Variable
+     const followerData = profileComp(apiResponse.data);                              // append that function to the appropriate html parent which we defined as htmlCardsParent
      htmlCardsParent.append(followerData);
   })
 })
