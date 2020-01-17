@@ -105,7 +105,7 @@ function profileComp(gitHubProf){
   compImg.src = gitHubProf.avatar_url;
   compName.textContent = gitHubProf.name;
   compUserName.textContent = gitHubProf.login;
-  compLocat.textContent = gitHubProf.location;      //targeting empty fields on created html and setting it up to recieve data in proper place
+  compLocat.textContent = gitHubProf.location;      //targeting empty fields on created html and setting it up to receive data in proper place
   compProfUrl.href = gitHubProf.html_url;
   compFollowers.textContent = `Followers: ${gitHubProf.followers}`;
   compFollowing.textContent = `Following: ${gitHubProf.following}`;
