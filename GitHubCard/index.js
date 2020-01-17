@@ -25,7 +25,14 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [  
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell',
+
+];
 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -55,13 +62,13 @@ const followersArray = [];
   luishrd
   bigknell
 */
-// axios.get('https://api.github.com/users/HUGHIII')
-// .then(response => {
-//   console.log(response.data);
-// })
-// .catch(error => {
-//   console.log('data not returned', error)
-// })
+axios.get('https://api.github.com/users/HUGHIII')
+.then(response => {
+  console.log(response.data);
+})
+.catch(error => {
+  console.log('data not returned', error)
+})
 
 
 function profileComp(gitHubProf){
@@ -77,12 +84,35 @@ function profileComp(gitHubProf){
   compFollowing = document.createElement('p');
   compBio = document.createElement('p');
 
-
+//classes
   parentCompCard.classList.add('card');
   compCardInfo.classList.add('card-info');
   compName.classList.add('name');
   compUserName.classList.add('username');
 
+//appends
   parentCompCard.append(compImg);
   parentCompCard.append(compCardInfo);
+
+  compCardInfo.append(compName);
+  compCardInfo.append(compUserName);
+  compCardInfo.append(compLocat);
+  compCardInfo.append(compProfile);
+
+  compProfile.append(compProfUrl);
+  
+  compCardInfo.append(compFollowers);
+  compCardInfo.append(compFollowing);
+  compCardInfo.append(compBio);
+
+  compImg.src = gitHubProf.avatar_url;
+  compName.textContent = gitHubProf.name;
+  compUserName.textContent = gitHubProf.login;
+  compLocat.textContent = gitHubProf.location;
+  compProfUrl.href = gitHubProf.html_url;
+  compFollowers.textContent = gitHubProf.followers;
+  compFollowing.textContent = gitHubProf.following;
+  compBio.textContent = gitHubProf.bio;
+  
+return parentCompCard;
 }
